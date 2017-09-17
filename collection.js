@@ -40,6 +40,10 @@
 				top: options.inset ? options.inset.top || 0 : 0,
 				bottom: options.inset ? options.inset.bottom || 0 : 0,
 			};
+			this.cellInset = {
+				top: options.cellInset ? options.cellInset.top || 0 : 0,
+				bottom: options.cellInset ? options.cellInset.bottom || 0 : 0,
+			};
 			this.scrollPastEnd = options.scrollPastEnd || 0;
 			
 			//state
@@ -59,7 +63,9 @@
 			this.cells = {};
 			this.visibleCells = [];
 			this.startCell = document.createElement(this.cellTagName);
+			this.startCell.classList.add('collection-space');
 			this.endCell = document.createElement(this.cellTagName);
+			this.endCell.classList.add('collection-space');
 			
 			//delegates
 			this.dataSource = {
@@ -68,11 +74,15 @@
 			};
 		}
 		
+		get cellHeight() {
+			return this.size.height + this.cellInset.top + this.cellInset.bottom;
+		}
+		
 		get start() {
 			let y = this.top - this.treshold;
 			y = y < 0 ? 0 : y;
 			
-			let index = Math.floor(y / this.size.height) * this.columns;
+			let index = Math.floor(y / this.cellHeight) * this.columns;
 			
 			if (index > this.length) {
 				index = this.length;
@@ -82,7 +92,7 @@
 		}
 		
 		get end() {
-			let index = Math.ceil((this.top + this.height + this.treshold) / this.size.height) * this.columns;
+			let index = Math.ceil((this.top + this.height + this.treshold) / this.cellHeight) * this.columns;
 			
 			if (index > this.length) {
 				index = this.length;
@@ -92,13 +102,13 @@
 		}
 		
 		get visibleCellsCount() {
-			return Math.ceil((this.height + this.treshold) / this.size.height) + 1; //add +1 for overlap
+			return Math.ceil((this.height + this.treshold) / this.cellHeight) + this.columns; //add +1 for overlap
 		}
 		
 		get scrollPastEndSize() {
 			let size = this.scrollPastEnd * this.height;
 			
-			size -= this.inset.top + this.inset.bottom + this.size.height;
+			size -= this.inset.top + this.inset.bottom + this.cellHeight;
 			
 			return size < 0 ? 0 : size;
 		}
@@ -210,11 +220,11 @@
 			
 			this.startCell.style.height = (
 				this.inset.top +
-				((this.currentStart / this.columns) * this.size.height)
+				((this.currentStart / this.columns) * this.cellHeight)
 			) + 'px';
 			this.endCell.style.height = (
 				this.inset.bottom + this.scrollPastEndSize +
-				(Math.ceil((this.length - this.currentEnd) / this.columns) * this.size.height)
+				(Math.ceil((this.length - this.currentEnd) / this.columns) * this.cellHeight)
 			) + 'px';
 		}
 		
@@ -313,15 +323,12 @@
 			let startIndex = index - this.currentStart;
 			let deleteLength = length;
 			if (startIndex < 0) {
+				this.currentStart += startIndex;
 				deleteLength += startIndex;
 				startIndex = 0;
 			}
 			
 			let cells = this.visibleCells.splice(startIndex, deleteLength);
-			
-			if (startIndex === 0) {
-				this.currentStart += deleteLength;
-			}
 			
 			this.currentEnd = this.currentStart + this.visibleCells.length;
 			
@@ -387,7 +394,6 @@
 				cell.prepareForReuse();
 			} else {
 				cell = new registered.cell(this.cellTagName);
-				cell.el.style.height = this.size.height + 'px';
 			}
 			
 			return cell;
