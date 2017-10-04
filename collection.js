@@ -233,6 +233,23 @@
 			this.update();
 		}
 		
+		scrollToCell(index) {
+			let y = (Math.floor(index / this.columns) * this.cellHeight) + this.inset.top;
+			let endY = y + this.cellHeight;
+			
+			let scrollTo = null;
+			
+			if (endY > this.top + this.height) {
+				scrollTo = endY - this.height;
+			} else if (y < this.top) {
+				scrollTo = y;
+			}
+			
+			if (scrollTo !== null) {
+				this.el.scrollTop = scrollTo;
+			}
+		}
+		
 		/**
 		 * Data
 		 */
