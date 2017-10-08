@@ -102,7 +102,9 @@
 		}
 		
 		get visibleCellsCount() {
-			return Math.ceil((this.height + this.treshold) / this.cellHeight) + this.columns; //add +1 for overlap
+			// treshold * 2 for both top and bottom
+			// add +1 for overlap
+			return Math.ceil((this.height + (this.treshold * 2)) / this.cellHeight) + this.columns;
 		}
 		
 		get scrollPastEndSize() {
