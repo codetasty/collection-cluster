@@ -249,6 +249,9 @@
 			
 			if (scrollTo !== null) {
 				this.el.scrollTop = scrollTo;
+				this.top = this.el.scrollTop;
+				
+				this.update();
 			}
 		}
 		
