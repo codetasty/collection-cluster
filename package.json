@@ -1,6 +1,6 @@
 {
-	"name": "collection-cluster",
-	"version": "0.9.5",
+	"name": "@codetasty/collection-cluster",
+	"version": "0.9.6",
 	"main": "collection.js",
 	"description": "Vanilla JS library for displaying large data sets easily with great performance.",
   "scripts": {
