@@ -1,5 +1,24 @@
 {
 	"name": "collection-cluster",
-	"version": "0.9.4",
-	"main": "./collection.js"
+	"version": "0.9.5",
+	"main": "collection.js",
+	"description": "Vanilla JS library for displaying large data sets easily with great performance.",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:codetasty/collection-cluster.git"
+  },
+  "keywords": [
+  	"collection",
+  	"scroll",
+    "vanillajs",
+    "table",
+    "list",
+    "cluster",
+    "data",
+    "large"
+  ],
+  "author": "CodeTasty",
+  "license": "GPLv3"
 }
