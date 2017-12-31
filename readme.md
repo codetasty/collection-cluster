@@ -7,11 +7,11 @@ Vanilla JS library for displaying large data sets easily with great performance.
 `$ npm install @codetasty/collection-cluster --save`
 
 ## Usage
-```
+```html
 <ul class="list"></ul>
 ```
 
-```
+```javascript
 var data = ['Item 1', 'Item 2', 'Item 3'];
 
 var collection = new CollectionCluster.Collection(document.querySelector('.list'), {
@@ -29,7 +29,9 @@ var collection = new CollectionCluster.Collection(document.querySelector('.list'
 	}
 });
 
-this.collection.registerCell('custom', CollectionCluster.Cell);
+collection.registerCell('custom', CollectionCluster.Cell);
 
-this.collection.hook();
+collection.hook();
 ```
+
+## Usage
